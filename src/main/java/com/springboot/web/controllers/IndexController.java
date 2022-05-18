@@ -4,6 +4,7 @@ import java.util.ArrayList;
 //import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,20 @@ import com.springboot.web.models.Usuario;
 @Controller
 public class IndexController {
 	
+	@Value("${texto.indexcontroller.index.titulo}")
+	private String textoIndex;
+	
+	@Value("${texto.indexcontroller.perfil.titulo}")
+	private String textoPerfil;
+	
+	@Value("${texto.indexcontroller.listar.titulo}")
+	private String TextoListar;
+	
+	
 	//Esta funcion retorna un archivo html
 	@GetMapping({"/index","/",""}) //Etiqueta para mostrar mostrar una vista al cargar un URL
 	public String index(Model model) {
-		model.addAttribute("titulo", "Hola spring Model!");//Agregar al modelo una variable / objeto
+		model.addAttribute("titulo", textoIndex);//Agregar al modelo una variable / objeto
 		return "index"; //Siempre se va a buscar la vista en la carpeta templates
 	}
 	
@@ -30,7 +41,7 @@ public class IndexController {
 		usuario.setApellido("Mena");
 		usuario.setEmail("dumm2000@gmail.com");
 		model.addAttribute("usuario", usuario);
-		model.addAttribute("titulo", "Perfil del usuario: ".concat(usuario.getNombre()));
+		model.addAttribute("titulo", textoPerfil.concat(usuario.getNombre()));
 		return "perfil";
 	}
 	
@@ -47,7 +58,7 @@ public class IndexController {
 		usuarios.add(new Usuario("Juan","Mena","juan@gmail.com"));
 		*/
 		
-		model.addAttribute("titulo", "Lista de usuarios");
+		model.addAttribute("titulo", TextoListar);
 		//model.addAttribute("usuarios", usuarios);
 		return "listar";
 	}
